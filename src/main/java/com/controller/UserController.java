@@ -1,23 +1,13 @@
 package com.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.models.Impl.User;
@@ -29,48 +19,38 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
-	
+
+	// 페이지 이동
 	@RequestMapping(value = "/index")
-	public String mainPage() {
-		return "index";
-	}
-	
+	public String mainPage(){ return "index"; }
 	
 	@RequestMapping(value = "/login")
-	public String login() {
-		return "login/login";
-	}
+	public String login() { return "login/login"; }
 	
 	@RequestMapping(value = "/UpdateUser")
-	public String updateUser() {
-		return "login/UpdateUser";
-	}
+	public String updateUser() { return "login/UpdateUser"; }
 	
 	@RequestMapping(value = "/getUserListPage")
-	public String getUserListPage() {
-		return "login/UserList";
-	}
+	public String getUserListPage() { return "login/UserList"; }
 	
 	@RequestMapping(value = "/signUp")
-	public String signUp() {
-		return "login/SignUp";
-	}
+	public String signUp() { return "login/SignUp"; }
 	
 	@RequestMapping(value = "/welcome")
-	public String welcome() {
-		return "Main/welcome";
-	}
+	public String welcome() { return "Main/welcome"; }
 	
+	@RequestMapping(value = "/leaveUser")
+	public String leaveUser() { return "login/leaveUser"; }
+	
+	
+	
+	// API 통해 DB 연동하는 함수
 	@RequestMapping(value="/getUserList")
 	public @ResponseBody Map<String , Object> getUserList() {
-		
 	    Map<String, Object> jsonObject = new HashMap<String, Object>();
 	    jsonObject.put("result_list", userService.getUserList());
-
 	    return jsonObject; 
-
 	}
-	
 		
 	@RequestMapping( value="/addUser", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void addUser(@RequestBody User user) {
@@ -91,26 +71,14 @@ public class UserController {
 		return userService.checkSignIn(user.getId(), user.getPasswd());
 	}
 		
-	@RequestMapping( value="/updateUser", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping( value="/updateUserInfo", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody void updateUser(@RequestBody User user) {
 		userService.updateUser(user);
 	}
 
 	@RequestMapping( value="/dropUser", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody void dropUser(@RequestBody String uid) {
-		userService.dropUser(uid);
-
+	public @ResponseBody int dropUser(@RequestBody String uid) {
+		return userService.dropUser(uid);
 	}
 
-	
-	
-	//public int checkSignIn(String id, String pw);
-	
-	/*public List getUserList();
-
-
-	public User getUserInfo(User user);
-	public boolean checkUser(String uid);
-	public int checkSignIn(String id, String pw);
-	public boolean checkId(String id);*/
 }

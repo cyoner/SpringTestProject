@@ -16,6 +16,7 @@
 				<div flex class="md-headline">id</div>				
 				<div flex class="md-headline">first_name</div>		
 				<div flex class="md-headline">last_name</div>
+				
 			</div>
 
 			<div ng-repeat='user in userList' class="row">

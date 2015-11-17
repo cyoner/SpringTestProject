@@ -157,19 +157,21 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
-	public void dropUser(String uid){
+	public int dropUser(String uid){
 		sql="delete from user where id = ?";
+		int numRows =0;
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			con = DriverManager.getConnection(url, id, pw);
 			ptmt = con.prepareStatement(sql);
 			ptmt.setString(1, uid);
-			int numRows = ptmt.executeUpdate();  
+			numRows = ptmt.executeUpdate();  
 		} catch (Exception e) {
-			System.out.println("DB load fail "+e.toString());
 		}
+		return numRows;
 	}
 	public void updateUser(User user){
+		System.out.println(1111);
 		sql="update user set passwd=?, last_name=?, first_name=? where id = ?";
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -179,6 +181,7 @@ public class UserServiceImpl implements UserService{
 			ptmt.setString(2, user.getLast_name());
 			ptmt.setString(3, user.getFirst_name());
 			ptmt.setString(4, user.getId());
+			System.out.println(user.getId());
 			int numRows = ptmt.executeUpdate();  
 		} catch (Exception e) {
 			System.out.println("DB load fail "+e.toString());

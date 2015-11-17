@@ -34,7 +34,7 @@
 			</md-input-container>
 			
 			<section layout="row"  layout-align="center center" layout-wrap>
-				<md-button class="md-raised md-primary" ng-click="addUser()">Update User Info</md-button>
+				<md-button class="md-raised md-primary" ng-click="updateUserInfo()">Update User Info</md-button>
 			</section>
 		</div>
 	</md-card>
